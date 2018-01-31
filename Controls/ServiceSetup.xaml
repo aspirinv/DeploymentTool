@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="incadea.WsCrm.DeploymentTool.Controls.ServiceSetup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:utils="clr-namespace:incadea.WsCrm.DeploymentTool.Utils"
+             mc:Ignorable="d" Margin="16"
+             d:DesignHeight="400" d:DesignWidth="500">
+    <Grid>
+        <Grid.Resources>
+            <utils:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></utils:BoolToVisibilityConverter>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <RadioButton GroupName="HostingType" IsChecked="{Binding IsAzureHosting}">Azure</RadioButton>
+        <RadioButton Grid.Column="1" GroupName="HostingType" IsChecked="True">On Premise</RadioButton>
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" 
+                      Visibility="{Binding IsAzureHosting, Converter={StaticResource BoolToVisibilityConverter}}" 
+                      VerticalScrollBarVisibility="Auto">
+            <Grid Margin="16 4 4 4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Tenant"></TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding Tenant, Mode=TwoWay}"></TextBox>
+                <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Content="Login" Command="{Binding LoginCommand}"></Button>
+                <TextBlock Text="Subscription" Grid.Row="3"></TextBlock>
+                <ComboBox Grid.Row="3" Grid.Column="1" DisplayMemberPath="Name" ItemsSource="{Binding Subscriptions}" SelectedItem="{Binding Subscription, Mode=TwoWay}"></ComboBox>
+                <TextBlock Text="Location" Grid.Row="4"></TextBlock>
+                <ComboBox Grid.Row="4" Grid.Column="1" DisplayMemberPath="DisplayName" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"></ComboBox>
+                <TextBlock Text="Resource group" Grid.Row="5"></TextBlock>
+                <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding ResourceGroups}" SelectedItem="{Binding SelectedGroup, Mode=TwoWay}" 
+                          Text="{Binding ResourceGroupName, Mode=TwoWay}" IsEditable="True" DisplayMemberPath="Name"></ComboBox>
+                <TextBlock Text="Storage account" Grid.Row="6"></TextBlock>
+                <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding StorageAccounts}" Text="{Binding StorageAccount, Mode=TwoWay}" IsEditable="True"></ComboBox>
+            </Grid>
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" 
+                      Visibility="{Binding IsAzureHosting, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}" 
+                      VerticalScrollBarVisibility="Auto">
+            <Grid Margin="16 4 4 4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock>Files folder (chose existing folder)</TextBlock>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding ServiceFilesPath, Mode=TwoWay}"></TextBox>
+                    <Button Command="{Binding ChooseFolderCommand}" Grid.Column="1">Select folder</Button>
+                </Grid>
+                <TextBlock Grid.Row="1" Text="Site name"></TextBlock>
+                <ComboBox SelectedItem="{Binding SelectedSite, Mode=TwoWay}" IsEditable="True" 
+                          DisplayMemberPath="Name" Text="{Binding SiteName, Mode=TwoWay}"
+                          Grid.Row="1" Grid.Column="1" ItemsSource="{Binding WebSites}"></ComboBox>
+                <TextBlock Grid.Row="2" Text="Port"></TextBlock>
+                <TextBox Text="{Binding Port}" Grid.Row="2" Grid.Column="1"></TextBox>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

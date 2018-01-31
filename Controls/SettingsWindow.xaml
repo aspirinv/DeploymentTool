@@ -1,0 +1,54 @@
+﻿<Window x:Class="incadea.WsCrm.DeploymentTool.Controls.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:utils="clr-namespace:incadea.WsCrm.DeploymentTool.Utils"
+        mc:Ignorable="d" Width="700" Height="500" Icon="../Resources/favicon.ico"
+        Title="SettingsWindow" >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="StylesDictionary.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Settings" Style="{StaticResource HeaderText}"></TextBlock>
+        <GroupBox Grid.Row="1" Margin="4">
+            <GroupBox.Header>
+                <TextBlock Text="Proxy settings" FontWeight="Bold"></TextBlock>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="ProxyServer"></TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding ProxyServerName, Mode=TwoWay}"></TextBox>
+                <TextBlock Grid.Row="1" Text="Domain"></TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ProxyDomain, Mode=TwoWay}"></TextBox>
+                <TextBlock Grid.Row="2" Text="Login"></TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ProxyLogin, Mode=TwoWay}"></TextBox>
+                <TextBlock Grid.Row="3" Text="Password"></TextBlock>
+                <PasswordBox Grid.Row="3" Grid.Column="1" utils:PasswordHelper.Password="{Binding ProxyPassword, Mode=TwoWay}"></PasswordBox>
+            </Grid>
+        </GroupBox>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button IsDefault="True" Command="{Binding ApplySettingsCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">OK</Button>
+            <Button IsCancel="True">Cancel</Button>
+        </StackPanel>
+    </Grid>
+</Window>

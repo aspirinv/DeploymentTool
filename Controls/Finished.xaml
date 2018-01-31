@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="incadea.WsCrm.DeploymentTool.Controls.Finished"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:utils="clr-namespace:incadea.WsCrm.DeploymentTool.Utils"
+             mc:Ignorable="d" Margin="16"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <utils:NavigateCommand x:Key="NavigateCommand" />
+    </UserControl.Resources>
+    <StackPanel Orientation="Vertical">
+        <TextBlock Style="{StaticResource Text}">
+            incadea.crm deployment has been finished. Proceed with updating and configuring of connected applications.
+            Save publishing profile, that can be used in future updates.
+        </TextBlock>
+        <TextBlock Text="{Binding DataContext}"></TextBlock>
+        <Button HorizontalAlignment="Right" Margin="0 20" Command="{Binding SaveProfileCommand}">Save profile</Button>
+        <TextBlock>
+            Use service link for integration <Hyperlink Command="{StaticResource NavigateCommand}" CommandParameter="{Binding ServiceUrl}" NavigateUri="{Binding ServiceUrl}"><Run Text="{Binding ServiceUrl}"></Run></Hyperlink>
+            </TextBlock>
+        <TextBlock>
+            Check and fill missing fields in <Hyperlink Command="{StaticResource NavigateCommand}" CommandParameter="{Binding SettingsUrl}" NavigateUri="{Binding SettingsUrl}">CRM setting entity</Hyperlink>
+        </TextBlock>
+        <TextBlock>Execution logs:</TextBlock>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <TextBlock Text="{Binding FullLog}" ></TextBlock>
+        </ScrollViewer>
+    </StackPanel>
+</UserControl>

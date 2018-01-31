@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="incadea.WsCrm.DeploymentTool.Controls.InstallationTypeChoise"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:utils="clr-namespace:incadea.WsCrm.DeploymentTool.Utils"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.Resources>
+            <utils:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></utils:BoolToVisibilityConverter>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource HeaderText}" Text="Installation Mode" ></TextBlock>
+        <RadioButton Grid.Row="1" IsChecked="{Binding IsFull}" GroupName="Deployment" x:Name="RadioFull" >Full Deployment</RadioButton>
+        <TextBlock Visibility="{Binding ElementName=RadioFull, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="2" Margin="16 4 4 4" Style="{StaticResource Text}">
+            Full deployment process will be executed including all solutions and service installations
+        </TextBlock>
+        <RadioButton Grid.Row="3" IsChecked="{Binding IsDataImport}" GroupName="Deployment" x:Name="RadioDataImport">Data Import Mode</RadioButton>
+        <TextBlock  Visibility="{Binding ElementName=RadioDataImport, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="4" Margin="16 4 4 4" Style="{StaticResource Text}">
+            Only CRM solutions and settings required to perform data import will be deployed. After data import is done, rerun the deployment in full mode
+        </TextBlock>
+        <RadioButton Grid.Row="5" IsChecked="{Binding IsDataOnly}" GroupName="Deployment" x:Name="RadioTestData">Test Data Only</RadioButton>
+        <TextBlock  Visibility="{Binding ElementName=RadioTestData, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="6" Margin="16 4 4 4" Style="{StaticResource Text}">
+            Imports test data into configured CRM environment
+        </TextBlock>
+        <Button Grid.Row="6" HorizontalAlignment="Right" Command="{Binding UseProfileCommand}">Use profile</Button>
+    </Grid>
+</UserControl>
